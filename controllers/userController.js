@@ -1,6 +1,7 @@
 const User = require("../models/userModel");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
+const handlerFactory = require("./handlerFactory");
 
 const filterData = (obj, ...fields) => {
   const newObj = {};
@@ -11,14 +12,10 @@ const filterData = (obj, ...fields) => {
 };
 
 // CRUD Operations
-exports.createUser = catchAsync(async (req, res) => {
-  const newUser = await User.create(req.body);
-
-  res.status(200).json({
-    status: "success",
-    Date: newUser,
-  });
-});
+exports.createUser = handlerFactory.createDoc(User);
+exports.getUser = handlerFactory.getDoc(User);
+exports.updateUser = handlerFactory.updateDoc(User);
+exports.deleteUser = handlerFactory.deleteDoc(User);
 
 exports.getAllUsers = catchAsync(async (req, res) => {
   const users = await User.find();
@@ -28,42 +25,6 @@ exports.getAllUsers = catchAsync(async (req, res) => {
     Date: users,
   });
 });
-
-exports.getUser = async (req, res, next) => {
-  const user = await User.findById(req.params.id);
-  if (!user) {
-    return next(new AppError("Id is not correct!", 404));
-  }
-  res.status(200).json({
-    status: "success",
-    Data: user,
-  });
-};
-
-exports.updateUser = async (req, res, next) => {
-  const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
-  if (!updatedUser) {
-    return next(new AppError("Id is not correct!", 404));
-  }
-  res.status(200).json({
-    status: "succes",
-    Data: updatedUser,
-  });
-};
-
-exports.deleteUser = async (req, res, next) => {
-  const user = await User.findByIdAndDelete(req.params.id);
-  if (!user) {
-    return next(new AppError("Id is not correct!", 404));
-  }
-  res.status(200).json({
-    status: "Success",
-    Data: null,
-  });
-};
 
 // Updating Profile
 exports.updateProfile = catchAsync(async (req, res, next) => {

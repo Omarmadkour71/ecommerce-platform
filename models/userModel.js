@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
+const { parsePhoneNumber } = require("libphonenumber-js");
+const AppError = require("../utils/appError");
 
 // Creating User Schema
 const userSchema = new mongoose.Schema({
@@ -47,6 +49,31 @@ const userSchema = new mongoose.Schema({
   photo: {
     type: String,
   },
+  address: {
+    type: String,
+    trim: true,
+  },
+  phoneNumber: {
+    type: String,
+    trim: true,
+    unique: [true, "this phone number is already being used"],
+  },
+});
+
+// Phone Number Validation Middleware
+userSchema.pre("save", function (next) {
+  if (!this.isModified("phoneNumber") || !this.phoneNumber) return next();
+
+  const phone = parsePhoneNumber(this.phoneNumber, "EG");
+
+  if (!phone || !phone.isValid()) {
+    return next(
+      new AppError("phone Number isn't valid! please try another number", 400)
+    );
+  }
+
+  this.phoneNumber = phone.number;
+  return next();
 });
 
 // Hashing the Password
