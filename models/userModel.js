@@ -56,7 +56,7 @@ const userSchema = new mongoose.Schema({
   phoneNumber: {
     type: String,
     trim: true,
-    unique: [true, "this phone number is already being used"],
+    //unique: [true, "this phone number is already being used"],
   },
 });
 
