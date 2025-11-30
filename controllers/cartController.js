@@ -194,6 +194,7 @@ exports.cartCheckout = catchAsync(async (req, res, next) => {
     success_url: `${req.protocol}://${req.get("host")}/payment/success`,
     cancel_url: `${req.protocol}://${req.get("host")}/payment/cancel`,
     customer_email: cart.user.email,
+    client_reference_id: req.params.cartId, // Required for webhook to find the cart
     // shipping address collection
     shipping_address_collection: {
       allowed_countries: ["EG", "US"],
@@ -204,6 +205,7 @@ exports.cartCheckout = catchAsync(async (req, res, next) => {
       totalPrice: cart.totalPrice,
     },
     line_items: lineItems,
+    client_reference_id: req.user.id,
   });
 
   // (4) sending session as a response

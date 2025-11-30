@@ -55,11 +55,11 @@ const orderSchema = mongoose.Schema({
 // MiddleWare to calculate totalQuantity and totalPrice
 orderSchema.pre("save", function (next) {
   this.totalQuantity = this.items.reduce(
-    (sum, currentItem) => sum + currentItem.quntity,
+    (sum, currentItem) => sum + currentItem.quantity,
     0
   );
   this.totalPrice = this.items.reduce(
-    (sum, currentItem) => sum + currentItem.price * currentItem.quntity,
+    (sum, currentItem) => sum + currentItem.price * currentItem.quantity,
     0
   );
   this.totalPrice = parseFloat(this.totalPrice.toFixed(2));
