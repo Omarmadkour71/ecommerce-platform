@@ -179,7 +179,7 @@ exports.cartCheckout = catchAsync(async (req, res, next) => {
   const lineItems = cart.items.map((item) => ({
     price_data: {
       currency: "usd",
-      unit_amount: item.price * 100, // cent
+      unit_amount: Math.round(item.price * 100), // cent
       product_data: {
         name: item.product.name,
       },
@@ -205,7 +205,6 @@ exports.cartCheckout = catchAsync(async (req, res, next) => {
       totalPrice: cart.totalPrice,
     },
     line_items: lineItems,
-    client_reference_id: req.user.id,
   });
 
   // (4) sending session as a response

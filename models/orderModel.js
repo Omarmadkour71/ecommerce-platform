@@ -45,7 +45,8 @@ const orderSchema = mongoose.Schema({
     enum: ["preparing", "shipped", "cancelled", "delivered"],
   },
   shippingAddress: {
-    type: String,
+    type: Object,
+    default: null,
   },
   paidAt: {
     type: Date,

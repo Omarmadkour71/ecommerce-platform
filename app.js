@@ -39,7 +39,7 @@ app.use("/api/v1/review", reviewRouter);
 // 404 handler
 app.all("/{*any}", (req, res, next) => {
   //console.log(process.env.NODE_ENV);
-  console.log(process.argv);
+  //console.log(process.argv);
   next(new AppError(`Can't find ${req.originalUrl} on the Server!`, 404));
 });
 

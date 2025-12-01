@@ -59,7 +59,8 @@ exports.stripeWebhookHandler = async (req, res) => {
         paymentStatus: "paid",
         orderStatus: "preparing",
         paidAt: Date.now(),
-        shippingAddress: session.shipping ? session.shipping.address : null,
+        shippingAddress:
+          session.collected_information?.shipping_details || null,
       });
 
       //delete the cart
