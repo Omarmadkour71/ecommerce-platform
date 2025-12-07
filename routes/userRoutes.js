@@ -15,12 +15,21 @@ userRouter.route("/resetpassword/:token").post(authController.resetPassword);
 // Updating User Profile
 userRouter
   .route("/updateprofile")
-  .post(authController.protect, userController.updateProfile);
+  .post(
+    authController.protect,
+    userController.uploadUserPhoto,
+    userController.resizeUserPhoto,
+    userController.updateProfile
+  );
 
 // CRUD Operations
 userRouter
   .route("/")
-  .post(userController.createUser)
+  .post(
+    userController.updateProfile,
+    userController.resizeUserPhoto,
+    userController.createUser
+  )
   .get(
     authController.protect,
     authController.restrictTo("admin"),
