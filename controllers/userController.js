@@ -92,7 +92,7 @@ exports.updateProfile = catchAsync(async (req, res, next) => {
   // (4) Send Response to user
   res.status(201).json({
     status: "Success",
-    User: {
+    user: {
       updatedUser,
     },
   });

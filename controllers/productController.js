@@ -30,7 +30,7 @@ exports.uploadProductPhoto = upload.fields([{ name: "images", maxCount: 10 }]);
 
 // Sharp Configuration for Saving and resizing photos
 exports.resizeProductImages = catchAsync(async (req, res, next) => {
-  if (!req.files.images) return next();
+  if (!req.files || !req.files.images) return next();
 
   req.body.images = [];
   await Promise.all(

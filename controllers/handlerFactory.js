@@ -68,7 +68,7 @@ exports.getAllDocs = (Model) =>
     res.status(200).json({
       status: "Success",
       length: docs.length,
-      Date: {
+      data: {
         docs,
       },
     });
@@ -79,7 +79,7 @@ exports.createDoc = (Model) =>
     const doc = await Model.create(req.body);
     res.status(201).json({
       status: "Success",
-      Date: {
+      data: {
         doc,
       },
     });
@@ -97,7 +97,7 @@ exports.getDoc = (Model, popOptions) =>
 
     res.status(200).json({
       status: "Success",
-      Date: {
+      data: {
         doc,
       },
     });
@@ -116,7 +116,7 @@ exports.updateDoc = (Model) =>
 
     res.status(200).json({
       status: "Success",
-      Date: {
+      data: {
         doc,
       },
     });
@@ -132,6 +132,6 @@ exports.deleteDoc = (Model) =>
 
     res.status(204).json({
       status: "Success",
-      Data: null,
+      data: null,
     });
   });

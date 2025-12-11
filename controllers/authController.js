@@ -31,10 +31,14 @@ exports.signUp = catchAsync(async (req, res, next) => {
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
-    confirmPassword: req.body.password,
+    confirmPassword: req.body.confirmPassword,
+    phoneNumber: req.body.phoneNumber,
     passwordChangedAt: req.body.passwordChangedAt,
     role: req.body.role,
   });
+  if (!req.body.phone) {
+    delete req.body.phone; // removes the field
+  }
   creatSendToken(newUser, 201, res);
 });
 
@@ -66,7 +70,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   ) {
     token = req.headers.authorization.split(" ")[1];
   } else if (req.cookies && req.cookies.jwt) {
-    token = req.cookie.jwt;
+    token = req.cookies.jwt;
   }
   if (!token) {
     return next(new AppError("please login to access this page", 401));

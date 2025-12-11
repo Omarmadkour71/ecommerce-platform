@@ -36,7 +36,7 @@ exports.addItemToCart = catchAsync(async (req, res, next) => {
     });
     return res.status(201).json({
       status: "Success",
-      Data: {
+      data: {
         cart,
       },
     });
@@ -52,7 +52,7 @@ exports.addItemToCart = catchAsync(async (req, res, next) => {
   // Sending response to user
   res.status(200).json({
     status: "Success",
-    Data: {
+    data: {
       cart,
     },
   });
@@ -103,7 +103,7 @@ exports.deleteItemFromCart = catchAsync(async (req, res, next) => {
   // Sending response to user
   res.status(200).json({
     status: "Success",
-    date: {
+    data: {
       userCart,
     },
   });
